@@ -1,0 +1,35 @@
+// Reference only for bad approach using union
+class SorterBadApproach {
+  constructor(public collection: number[] | string) {}
+
+  sort(): void {
+    const { length } = this.collection;
+
+    // If collection is an array of numbers
+    for (let i = 0; i < length; i++) {
+      for (let j = 0; j < length - i - 1; j++) {
+        // Type Guard
+        if (this.collection instanceof Array) {
+          if (this.collection[j] > this.collection[j + 1]) {
+            const leftHand = this.collection[j];
+            this.collection[j] = this.collection[j + 1];
+            this.collection[j + 1] = leftHand;
+          }
+        }
+      }
+    }
+
+    // If collection is a string, do this logic instead
+  }
+}
+
+const sorterBadApproach = new SorterBadApproach([10, 3, -5, 0]);
+sorterBadApproach.sort();
+console.log(sorterBadApproach);
+
+/*
+  Note on inner loop exclude the last item sorted in the previous iteration
+  for (let j = 0; j < length - i - 1; j++) {
+  
+  The 'i' in length - i - 1 accounts for the fact that after a full iteration the rightmost element will be in the correct location therefore we do not need to resort again.
+*/
